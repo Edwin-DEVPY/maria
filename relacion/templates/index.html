@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <style>
+        body{
+            background: rgb(93, 196, 236);
+        }
+        .italic{
+            font-style: italic;
+            color: rgb(236, 130, 148);
+            font-weight: bold;
+        }
+
+        .rainbow-text {
+            font-style: italic;
+            font-size: 24px;
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+    <div class="text-center">
+        <h1 class="text-uppercase"><span class="rainbow-text">Hola, responde el formulario de abajo!</span></h1>
+    </div>
+    <br>
+    <div>
+        <p class="font-italic italic">
+            Lee atentamente esto: quiero saber acerca de lo que sientes y que mejor manera que usar mi ingenio
+            para averiguarlo, yo siempre quiero estar muy atento de ti, siempre pense que la comunicacion es la clave
+            y un consejo que escuche fue el que me ayudo "trabaje como pareja en vez de como uno", responde este formulario,
+            solo tu y yo sabremos las respuestas.
+        </p>
+    </div>
+
+    {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+            {% endfor %}
+    {% endif %}
+    
+    <form method="post" action="{% url 'maria' %}" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <label for="id_nombre">Nombre:</label>
+            <input type="text" name="nombre" id="id_nombre" class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label for="id_nombre">Apellido:</label>
+            <input type="text" name="apellido" id="id_apellido" class="form-control">
+          </div>
+
+        <div class="form-group">
+            <label for="id_email">Correo:</label>
+            <input type="email" name="email" id="id_email" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="inputState" class="form-label">Me amas?</label>
+            <select id="inputState" class="form-select" name="amar">
+            <option selected value="SII">SII</option>
+            <option value="No:/">No:/</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="id_mensaje">Mensaje:</label>
+            <textarea name="mensaje" id="id_mensaje" class="form-control"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-danger">Enviar</button>
+    </form>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var rainbowText = document.querySelector('.rainbow-text');
+          var text = rainbowText.textContent;
+          var colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF'];
+          
+          var newHTML = '';
+    
+          for (var i = 0; i < text.length; i++) {
+            var color = colors[i % colors.length];
+            newHTML += '<span style="color: ' + color + ';">' + text[i] + '</span>';
+          }
+    
+          rainbowText.innerHTML = newHTML;
+        });
+      </script>
+</body>
+</html>
